@@ -8,7 +8,8 @@ import math
 # Functions to be imported
 from Equations import A
 
-
+# Constants
+g = 9.81
 
 # File Paths
 data_root='../Data'
