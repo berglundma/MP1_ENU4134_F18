@@ -1,8 +1,14 @@
 #!/usr/bin/env python2.7
 
-# Libraries
+# Libraries to be imported
 import os.path
 import pyexcel as pe
+import math
+
+# Functions to be imported
+from Equations import A
+
+
 
 # File Paths
 data_root='../Data'
@@ -18,3 +24,6 @@ for row in test_data:
 steam_data = pe.get_sheet(file_name=os.path.join(data_root, steam_file), start_column=0, column_limit=7)
 for row in steam_data:
     print("%s: %s: %s: %s: %s: %s:" % (row[0], row[1], row[2], row[3], row[4], row[5]))
+
+# Test Calculations from the equations file
+print("Area: %s" % (A(197)))

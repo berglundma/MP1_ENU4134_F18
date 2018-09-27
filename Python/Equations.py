@@ -1,10 +1,11 @@
 # The file with all of the equations
+import math
 
-def A(pipe_diameter)
-    area = (pi*pipe_diameter^2)/4
+def A(pipe_diameter):
+    area = (math.pi*(pipe_diameter**2))/4
     return area;
 
-def G_m(m_dot_f, m_dot_g, pipe_diameter)
+def G_m(m_dot_f, m_dot_g, pipe_diameter):
     gm=(m_dot_g/A(pipe_diameter))+(m_dot_f/A(pipe_diameter))
     return gm;
 
