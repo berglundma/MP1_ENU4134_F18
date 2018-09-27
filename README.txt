@@ -12,7 +12,8 @@ File Structure
 |- Latex - Directory for *tex development
 |
 |- Python - Directory for Python development
-
+      | - Corralator.py - master program
+      | - Equations.py - where all the equations live
 
 Language - Python 2.7
 Libraries used - 
