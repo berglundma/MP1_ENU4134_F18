@@ -12,6 +12,7 @@ from Equations import *
 
 # Constants
 g = 9.81
+sigma = 0.07407
 
 # File Paths
 data_root='../Data'
