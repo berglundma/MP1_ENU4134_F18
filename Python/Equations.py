@@ -37,12 +37,13 @@ def Re_g(G_g, mu_g, pipe_diameter):
 	Re_g = G_g*D/mu_g
 	return Re_g;
 	
-def f_lo_mc(G_m, mu_g, pipe_diameter):
-	f_lo_mcadams = 0.184*Re_lo**(-0.2)
+def f_lo_mc(G_m, mu_f, pipe_diameter):
+	Re = Re_lo(G_m, mu_f, pipe_diameter)
+	f_lo_mcadams = 0.184*Re**(-0.2)
 	return f_lo_mcadams;
 	
 def rho_m_HEM(m_dot_g, m_dot_f, rho_f, rho_g):
-	rho_m_HEM = 1/((x/rho_g)+((1-x)/rho_f))
+	rho_m_HEM = 1/((x(m_dot_g, m_dot_f)/rho_g)+((1-x(m_dot_g, m_dot_g))/rho_f))
 	return rho_m_HEM;
 	
 def x(m_dot_g, m_dot_f):
@@ -50,8 +51,10 @@ def x(m_dot_g, m_dot_f):
 	return quality;
 
 # HEM Correlation
-def dp_dz_HEM(G_m, mu_g, m_dot_g, m_dot_f, rho_f, rho_g, pipe_diameter):
-	dp_dz_HEM = -f_lo_mc*G_m**2/(2*D*rho_m_HEM)
+def dp_dz_HEM(G_m, mu_f, m_dot_g, m_dot_f, rho_f, rho_g, pipe_diameter):
+        f_lo_mcadams = f_lo_mc(G_m, mu_f, pipe_diameter)
+        rho_m = rho_m_HEM(m_dot_g, m_dot_f, rho_f, rho_g)
+	dp_dz_HEM = -((f_lo_mcadams*G_m**2)/(2*pipe_diameter*rho_m))
 	return dp_dz_HEM;
 	
 # Lockheart Martinelli Corellation
