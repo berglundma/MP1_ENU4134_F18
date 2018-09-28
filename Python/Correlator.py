@@ -14,15 +14,15 @@ g = 9.81
 # File Paths
 data_root='../Data'
 test_file='mp1_2018_data.ods'
-steam_file='property_list_water IAPWS.ods'
+tdv_file='Table_densities_viscosities.ods'
 
 # Import Datasets
 test_data = pe.get_sheet(file_name=os.path.join(data_root, test_file), start_column=0, column_limit=7)
 print(test_data.content)
 
 # Import Steam Data
-steam_data = pe.get_sheet(file_name=os.path.join(data_root, steam_file), start_column=0, column_limit=15)
-print(steam_data.content)
+tdv_data = pe.get_sheet(file_name=os.path.join(data_root, tdv_file), start_column=0, column_limit=15)
+print(tdv_data.content)
 
 # Test Calculations from the equations file
 #print("Area: %s" % (A(197)))
@@ -35,8 +35,8 @@ for row in test_data:
     t_mdotg = row[4]/1000
     t_mdotf = row[5]/1000
     gm = G_m(t_mdotg, t_mdotf, D)
-    print("%s %s %s %s %s %s %s" % (gm, steam_data[1,4], t_mdotg, t_mdotf, steam_data[1,2], steam_data[1,11], D)) 
-    dp_dz = dp_dz_HEM(gm, steam_data[1,4], t_mdotg, t_mdotf, steam_data[1,2], steam_data[1,11], D)
+    print("%s %s %s %s %s %s %s" % (gm, tdv_data[1,3], t_mdotg, t_mdotf, tdv_data[1,1], tdv_data[1,2], D))
+    dp_dz = dp_dz_HEM(gm, tdv_data[1,3], t_mdotg, t_mdotf, tdv_data[1,1], tdv_data[1,2], D)
     print("dp_dz: %s" % (dp_dz))
 # Part 2
 
