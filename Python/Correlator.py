@@ -41,10 +41,6 @@ for row in test_data:
     dp_dz = dp_dz_HEM(gm, tdv_data[1,3], t_mdotg, t_mdotf, tdv_data[1,1], tdv_data[1,2], D)
     print("dp_dz: %s" % (dp_dz))
 
-    # Generate Graph of D vs dp_dz
-    #X = np.linspace(-50, 50, test_data.rows, endpoint=True)
-    #C = np.linspace(-100000000, 10000, 
-
 # Part 2
 
 # Part 3
