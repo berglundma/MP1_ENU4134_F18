@@ -63,18 +63,18 @@ def X_tt_squared(mu_f, mu_g, m_dot_g, m_dot_f, rho_g, rho_f):
 	return X_tt_squared;
 	
 def phi_l_squared(mu_f,mu_g,m_dot_g, m_dot_f, rho_g, rho_f):
-		X_t = X_tt_squared(mu_f,mu_g,m_dot_g, m_dot_f, rho_g, rho_f)
+	X_t = X_tt_squared(mu_f,mu_g,m_dot_g, m_dot_f, rho_g, rho_f)
 	phi_l_squared = 1+(20/X_t**(0.5))+(1/X_t)
 	return phi_l_squared;
 	
-def phi_lo_squared_LM(mu_f,mu_g,m_dot_g, m_dot_f, rho_g, rho_f):
-		phi_l = phi_l_squared(mu_f,mu_g,m_dot_g, m_dot_f, rho_g, rho_f)
-	phi_lo_squared = phi_l*(1-x(m_dot_g, m_dot_f)**(1.8)
+def phi_lo_squared_LM(mu_f, mu_g, m_dot_g, m_dot_f, rho_g, rho_f):
+	phi_l = phi_l_squared(mu_f, mu_g, m_dot_g, m_dot_f, rho_g, rho_f)
+	phi_lo_squared = phi_l*(1-x(m_dot_g, m_dot_f)**(1.8))
 	return phi_lo_squared;
 	
 def dp_dz_LM(mu_f,mu_g,m_dot_g, m_dot_f, rho_g, rho_f, G_m, pipe_diameter):
-		phi_lo = phi_lo_squared_LM(mu_f,mu_g,m_dot_g, m_dot_f, rho_g, rho_f)
-		f_lo_mc = f_lo_mc(G_m, mu_f, pipe_diameter)
+	phi_lo = phi_lo_squared_LM(mu_f,mu_g,m_dot_g, m_dot_f, rho_g, rho_f)
+	f_lo_mc = f_lo_mc(G_m, mu_f, pipe_diameter)
 	dp_dz_LM = -(phi_lo*f_lo_mc*G_m**2/(2*D*rho_f))
 	return dp_dz_LM;
 	
@@ -88,22 +88,22 @@ def H(rho_f, rho_g, mu_g, mu_f):
 	return H; 
 	
 def Fr(G_m, g, m_dot_g, m_dot_f, rho_f, rho_g, pipe_diameter):
-		rho_m_H = rho_m_HEM(m_dot_g, m_dot_f, rho_f, rho_g)
+        rho_m_H = rho_m_HEM(m_dot_g, m_dot_f, rho_f, rho_g)
 	Fr = G_m**2/(g*D*rho_m_H**2)
 	return Fr;
 	
 def We(G_m, sigma, m_dot_g, m_dot_f, rho_f, rho_g, pipe_diameter):
-		rho_m_H = rho_m_HEM(m_dot_g, m_dot_f, rho_f, rho_g)
+	rho_m_H = rho_m_HEM(m_dot_g, m_dot_f, rho_f, rho_g)
 	We = G_m**2*D/(sigma*rho_m_HEM)
 	return We;
 	
 def f_go_fri(G_m, mu_g, pipe_diameter):
-		Re_go = Re_go(G_m, mu_g, pipe_diameter)
+	Re_go = Re_go(G_m, mu_g, pipe_diameter)
 	f_go_friedal = (0.86859*ln(Re_go/(1.964*ln(Re_go)-3.8215)))**(-2)
 	return f_go_friedal;
 	
 def f_lo_fri(G_m, mu_f, pipe_diameter):
-		Re_lo = Re_lo(G_m, mu_f, pipe_diameter)
+	Re_lo = Re_lo(G_m, mu_f, pipe_diameter)
 	f_lo_friedal = (0.86859*ln(Re_lo/(1.964*ln(Re_lo)-3.8215)))**(-2)
 	return f_lo_friedal;
 	
@@ -114,18 +114,18 @@ def E(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, pipe_diameter):
 	return E;
 	
 def phi_lo_squared_fri(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, sigma, pipe_diameter):
-		E = E(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, pipe_diameter)
-		F = F(m_dot_g, m_dot_f)
-		H = H(rho_f, rho_g, mu_g, mu_f)
-		Fr = Fr(G_m, g, m_dot_g, m_dot_f, rho_f, rho_g, pipe_diameter)
-		We = We(G_m, sigma, m_dot_g, m_dot_f, rho_f, rho_g, pipe_diameter)
+	E = E(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, pipe_diameter)
+	F = F(m_dot_g, m_dot_f)
+	H = H(rho_f, rho_g, mu_g, mu_f)
+	Fr = Fr(G_m, g, m_dot_g, m_dot_f, rho_f, rho_g, pipe_diameter)
+	We = We(G_m, sigma, m_dot_g, m_dot_f, rho_f, rho_g, pipe_diameter)
 	phi_lo_squared_friedal = E+(3.24*F*H/(Fr**0.0454*We**0.035))
 	return phi_lo_squared_friedal;
 	
 def dp_dz_fri(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, sigma, pipe_diameter):
-		phi_lo_squared_fri = phi_lo_squared_fri(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, sigma, pipe_diameter)
-		f_lo_fri = f_lo_fri(G_m, mu_f, pipe_diameter)
-		rho_m_HEM = rho_m_HEM(m_dot_g, m_dot_f, rho_f, rho_g)
+	phi_lo_squared_fri = phi_lo_squared_fri(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, sigma, pipe_diameter)
+	f_lo_fri = f_lo_fri(G_m, mu_f, pipe_diameter)
+	rho_m_HEM = rho_m_HEM(m_dot_g, m_dot_f, rho_f, rho_g)
 	dp_dz_friedal = -(f_lo_fri*phi_lo_squared_fri*G_m**2/(2*D*rho_m_HEM))
 	return dp_dz_friedal
 	
