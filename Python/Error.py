@@ -9,14 +9,18 @@ def R2(corr, exp):
       corr_std  = np.std(corr)
       exp_mean  = np.mean(exp)
       exp_std   = np.std(exp)
-    
+
       for x in range(0, n_corr)
         sum_corr = (corr[x]-corr_mean)/corr_std
         sum_exp  = (exp[x] -exp_mean)/exp_std
         sum_total += sum_corr*sum_exp
 
-      r = (1/(1-n))(sum_total))
-      return r;
+#     Changes made:
+#     1-n changed to n_corr-1
+#     return r changed to return r**2
+      r = (1/(n_corr-1))(sum_total))
+      R2 = r**2
+      return R2;
 
     else:
       print "error calculating R2, length of arrays not equal"
@@ -30,7 +34,9 @@ def MAE(corr, exp):
       for x in range(0, n_corr)
         sum_total += np.absolute(((corr[n]-exp[n])/exp[n])*100)
 
-      mae = (1/n)(sum_total))
+#     Changes made:
+#     n changed to n_corr
+      mae = (1/n_corr)(sum_total)
       return mae;
 
     else:
