@@ -56,7 +56,12 @@ for row_test in data.itertuples():
    print('GM: %s' % (gm))
    print('P_test: %s P_data: %s' % (row_test.PressureE, row_test.PressureC))
    print('mu_f: %s   rho_f: %s   rho_g: %s' % (row_test.mu_f, row_test.rho_f, row_test.rho_g))
+<<<<<<< HEAD
    print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
+=======
+   print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz)
+
+>>>>>>> temp-branch
 print(data)
 
 # MAE
@@ -76,11 +81,13 @@ data.HEM_rms = rms
 # R2
 r2=R2(data.HEM_dp_dz, data.dP_dz)
 data.HEM_R2 = r2
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> temp-branch
 
 ### Lockhard-Martinelli Correlation ###
-n = 0
 for row_test in data.itertuples():
    D = row_test.D/1000
    t_mdotg = row_test.m_dot_g/1000
@@ -98,10 +105,8 @@ for row_test in data.itertuples():
    print('P_test: %s P_data: %s' % (row_test.PressureE, row_test.PressureC))
    print('mu_f: %s   rho_f: %s   rho_g: %s' % (row_test.mu_f, row_test.rho_f, row_test.rho_g))
    print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
-   n+=1
 
 ### Friedel Correlation ###
-n = 0
 for row_test in data.itertuples():
    D = row_test.D/1000
    t_mdotg = row_test.m_dot_g/1000
@@ -119,8 +124,32 @@ for row_test in data.itertuples():
    print('P_test: %s P_data: %s' % (row_test.PressureE, row_test.PressureC))
    print('mu_f: %s   rho_f: %s   rho_g: %s' % (row_test.mu_f, row_test.rho_f, row_test.rho_g))
    print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
-   n+=1
 
 ####### Part 2 #######
+AE_LM_Min = 100 # arbitrary starting value
+C_min = 0 # arbitrary starting value
+C = 0 # starting value
+while C < 100.01: # ending value
+    LM_corr = []
+    exp = []
+    for row_test in data.itertuples():
+       D = row_test.D/1000
+       t_mdotg = row_test.m_dot_g/1000
+       t_mdotf = row_test.m_dot_f/1000
+       gm = G_m(t_mdotg, t_mdotf, D)
+       dp_dz = dp_dz_LM_2(row_test.mu_f, row_test.mu_g, t_mdotf, t_mdotg, row_test.rho_f, row_test.rho_g, gm, D, C)
+       dp_dz = dp_dz/1000
+       LM_corr = LM_corr + [dp_dz]
+       exp = exp + [row_test.dP_dz]
+    MAE_LM = MAE(LM_corr, exp)
+    print(MAE_LM)
+    if MAE_LM < MAE_LM_Min:
+        MAE_LM_Min = MAE_LM
+        C_min = C
+    C = C + 0.01
+print('.')
+print('MAE_LM_Min: %s' % (MAE_LM_Min))
+print('MAE_LM_Final_Min: %s' % (MAE_LM_Min))
+print('C_min: %s' % (C_min))
 
 ####### Part 3 #######
