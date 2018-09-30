@@ -113,7 +113,7 @@ def f_lo_fri(G_m, mu_f, pipe_diameter):
 def E(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, pipe_diameter):
 	f_lo_fri_temp = f_lo_fri(G_m, mu_f, pipe_diameter)
 	f_go_fri_temp = f_go_fri(G_m, mu_g, pipe_diameter)
-	E = (1-x(m_dot_g, m_dot_f))**2+x(m_dot_g, m_dot_f)**2*rho_f*f_lo_fri_temp/(rho_g*f_go_fri_temp)
+	E = (1-x(m_dot_g, m_dot_f))**2+x(m_dot_g, m_dot_f)**2*rho_f*f_go_fri_temp/(rho_g*f_lo_fri_temp)
 	return E;
 
 def phi_lo_squared_fri(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, sigma, pipe_diameter):
@@ -128,8 +128,7 @@ def phi_lo_squared_fri(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, sigma, p
 def dp_dz_fri(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, sigma, pipe_diameter):
 	phi_lo_squared_fri_temp = phi_lo_squared_fri(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, sigma, pipe_diameter)
 	f_lo_fri_temp = f_lo_fri(G_m, mu_f, pipe_diameter)
-	rho_m_HEM_temp = rho_m_HEM(m_dot_g, m_dot_f, rho_f, rho_g)
-	dp_dz_friedal = -(f_lo_fri_temp*phi_lo_squared_fri_temp*G_m**2/(2*pipe_diameter*rho_m_HEM_temp))
+	dp_dz_friedal = -(f_lo_fri_temp*phi_lo_squared_fri_temp*G_m**2/(2*pipe_diameter*rho_f))
 	return dp_dz_friedal;
 
 
