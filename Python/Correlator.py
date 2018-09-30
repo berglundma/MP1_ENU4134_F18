@@ -153,3 +153,31 @@ print('MAE_LM_Final_Min: %s' % (MAE_LM_Min))
 print('C_min: %s' % (C_min))
 
 ####### Part 3 #######
+MAE_Re_lo_Min = 100 # arbitrary starting value
+C1_Re_lo_min = 0 # arbitrary starting value
+C2_Re_lo_min = 0 # arbitrary starting value
+C1 = -1 # starting value
+while C1 < 0.01: # ending value
+    C2 = -1 # starting value
+    while C2 < 0.01: # ending value
+        corr = []
+        for row_test in data.itertuples():
+           D = row_test.D/1000
+           t_mdotg = row_test.m_dot_g/1000
+           t_mdotf = row_test.m_dot_f/1000
+           gm = G_m(t_mdotg, t_mdotf, D)
+           dp_dz = dp_dz_fric_lo_3(gm, row_test.mu_f, t_mdotg, row_test.rho_g, D, C1, C2)
+           dp_dz = dp_dz/1000
+           corr = corr + [dp_dz]
+        MAE_Re_lo = MAE(corr, exp)
+        if MAE_Re_lo < MAE_Re_lo_Min:
+            MAE_Re_lo_Min = MAE_Re_lo
+            C1_Re_lo_min = C1
+            C2_Re_lo_min = C2
+        print(MAE_Re_lo_Min)
+        C2 = C2 + 0.01
+    C1 = C1 + 0.001
+print('.')
+print('MAE_Re_lo_Min_Final: %s' % (MAE_Re_lo_Min))
+print('C1_Re_lo_min: %s' % (C1_Re_lo_min))
+print('C2_Re_lo_min: %s' % (C2_Re_lo_min))
