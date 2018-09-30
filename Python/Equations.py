@@ -131,7 +131,6 @@ def dp_dz_fri(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, sigma, pipe_diame
 	dp_dz_friedal = -(f_lo_fri_temp*phi_lo_squared_fri_temp*G_m**2/(2*pipe_diameter*rho_f))
 	return dp_dz_friedal;
 
-
 ####### PART 2 #######
 def X_tt_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g):
 	X_tt_squared_2 = (mu_f/mu_g)**0.2*((1-x(m_dot_g, m_dot_f))/x(m_dot_g, m_dot_f))**1.8*(rho_g/rho_f)
@@ -153,22 +152,21 @@ def dp_dz_LM_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g, G_m, pipe_diameter, C
 	dp_dz_LM_2 = -(phi_lo_squared*f_lo_mcadams*G_m**2)/(2*pipe_diameter*rho_f)
 	return dp_dz_LM_2;
 
+####### PART 3 #######
+def dp_dz_fric_lo_3(G_m, mu_f, m_dot_g, rho_g, pipe_diameter):
+	Re_lo_temp = Re_lo(G_m, mu_f, pipe_diameter)
+	U_sg_temp = U_sg(m_dot_g, rho_g, pipe_diameter)
+	dp_dz_fric_lo_3 = (C_1*Re_lo_temp^C_2)*G_m*U_sg_temp/pipe_diameter
+	return dp_dz_fric_lo_3
 
+def dp_dz_fric_l_3(G_l, mu_f, m_dot_g, rho_g, pipe_diameter):
+	Re_l_temp = Re_l(G_l, mu_f, pipe_diameter)
+	U_sg_temp = U_sg(m_dot_g, rho_g, pipe_diameter)
+	dp_dz_fric_l_3 = (C_1*Re_l_temp^C_2)*G_m*U_sg_temp/pipe_diameter
+	return dp_dz_fric_l_3
 
-# def dp_dz_fric_lo_3(G_m, mu_f, pipe_diameter, G_m, U_sg, pipe_diameter)
-#		Re_lo = Re_lo(G_m, mu_f, pipe_diameter)
-#		U_sg = U_sg(m_dot_g, rho_g, pipe_diameter)
-#	dp_dz_fric_lo_3 = (C_1*Re_lo^C_2)*G_m*U_sg/pipe_diameter
-#	return dp_dz_fric_lo_3
-
-# dp_dz_fric_l_3(G_m, mu_f, pipe_diameter, G_m, U_sg, pipe_diameter)
-#		Re_l = Re_l(G_l, mu_f, pipe_diameter)
-#		U_sg = U_sg(m_dot_g, rho_g, pipe_diameter)
-#	dp_dz_fric_l_3 = (C_1*Re_l^C_2)*G_m*U_sg/pipe_diameter
-#	return dp_dz_fric_l_3
-
-# dp_dz_fric_g_3(G_m, mu_f, pipe_diameter, G_m, U_sg, pipe_diameter)
-#		Re_g = Re_g(G_g, mu_g, pipe_diameter)
-#		U_sg = U_sg(m_dot_g, rho_g, pipe_diameter)
-#	dp_dz_fric_g_3 = (C_1*Re_g^C_2)*G_m*U_sg/pipe_diameter
-#	return dp_dz_fric_g_3
+def dp_dz_fric_g_3(G_g, mu_g, m_dot_g, rho_g, pipe_diameter):
+	Re_g_temp = Re_g(G_g, mu_g, pipe_diameter)
+	U_sg_temp = U_sg(m_dot_g, rho_g, pipe_diameter)
+	dp_dz_fric_g_3 = (C_1*Re_g_temp^C_2)*G_m*U_sg_temp/pipe_diameter
+	return dp_dz_fric_g_3
