@@ -153,20 +153,22 @@ def dp_dz_LM_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g, G_m, pipe_diameter, C
 	return dp_dz_LM_2;
 
 ####### PART 3 #######
-def dp_dz_fric_lo_3(G_m, mu_f, m_dot_g, rho_g, pipe_diameter):
+def dp_dz_fric_lo_3(G_m, mu_f, m_dot_g, rho_g, pipe_diameter, C1, C2):
 	Re_lo_temp = Re_lo(G_m, mu_f, pipe_diameter)
 	U_sg_temp = U_sg(m_dot_g, rho_g, pipe_diameter)
-	dp_dz_fric_lo_3 = (C_1*Re_lo_temp^C_2)*G_m*U_sg_temp/pipe_diameter
-	return dp_dz_fric_lo_3
+	dp_dz_fric_lo_3 = (C1*Re_lo_temp**C2)*G_m*U_sg_temp/pipe_diameter
+	return dp_dz_fric_lo_3;
 
-def dp_dz_fric_l_3(G_l, mu_f, m_dot_g, rho_g, pipe_diameter):
-	Re_l_temp = Re_l(G_l, mu_f, pipe_diameter)
-	U_sg_temp = U_sg(m_dot_g, rho_g, pipe_diameter)
-	dp_dz_fric_l_3 = (C_1*Re_l_temp^C_2)*G_m*U_sg_temp/pipe_diameter
-	return dp_dz_fric_l_3
+def dp_dz_fric_l_3(G_m, mu_f, m_dot_g, m_dot_f, rho_g, pipe_diameter, C1, C2):
+    G_l_temp = G_l(m_dot_f, pipe_diameter)
+    Re_l_temp = Re_l(G_l_temp, mu_f, pipe_diameter)
+    U_sg_temp = U_sg(m_dot_g, rho_g, pipe_diameter)
+    dp_dz_fric_l_3 = (C1*Re_l_temp**C2)*G_m*U_sg_temp/pipe_diameter
+    return dp_dz_fric_l_3;
 
-def dp_dz_fric_g_3(G_g, mu_g, m_dot_g, rho_g, pipe_diameter):
-	Re_g_temp = Re_g(G_g, mu_g, pipe_diameter)
-	U_sg_temp = U_sg(m_dot_g, rho_g, pipe_diameter)
-	dp_dz_fric_g_3 = (C_1*Re_g_temp^C_2)*G_m*U_sg_temp/pipe_diameter
-	return dp_dz_fric_g_3
+def dp_dz_fric_g_3(G_m, mu_g, m_dot_g, rho_g, pipe_diameter, C1, C2):
+    G_g_temp = G_l(m_dot_g, pipe_diameter)
+    Re_g_temp = Re_g(G_g_temp, mu_g, pipe_diameter)
+    U_sg_temp = U_sg(m_dot_g, rho_g, pipe_diameter)
+    dp_dz_fric_g_3 = (C1*Re_g_temp**C2)*G_m*U_sg_temp/pipe_diameter
+    return dp_dz_fric_g_3;
