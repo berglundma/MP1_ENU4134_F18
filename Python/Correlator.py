@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 # Functions to be imported
 from Equations import *
+from Error import *
 
 # Constants
 g = 9.81
@@ -35,8 +36,7 @@ print(data)
 
 ####### Part 1 #######
 
-### HEM Correlation ###
-n = 0
+### HEM Cororelation ###
 for row_test in data.itertuples():
    D = row_test.D/1000
    t_mdotg = row_test.m_dot_g/1000
@@ -44,17 +44,40 @@ for row_test in data.itertuples():
    gm = G_m(t_mdotg, t_mdotf, D)
    dp_dz = dp_dz_HEM(gm, row_test.mu_f, t_mdotg, t_mdotf, row_test.rho_f, row_test.rho_g, D)
    dp_dz = dp_dz/1000
+   data.at[row_test.Index, 'HEM_dp_dz'] = dp_dz
 
+   #scatter_plot(arrayoftest, arrayofcorr)
    print('.')
    print('.')
    print('.')
    print('HEM Correlation')
-   print('D: %s   m_dot_g: %s   m_dot_f: %s' % (row_test.D, row_test.m_dot_g, row_test.m_dot_f))
+   print(row_test)
+   print('D: %s   m_dot_g: %s   m_dot_f: %s ' % (row_test.D, row_test.m_dot_g, row_test.m_dot_f))
    print('GM: %s' % (gm))
    print('P_test: %s P_data: %s' % (row_test.PressureE, row_test.PressureC))
    print('mu_f: %s   rho_f: %s   rho_g: %s' % (row_test.mu_f, row_test.rho_f, row_test.rho_g))
    print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
-   n+=1
+print(data)
+
+# MAE
+mae=MAE(data.HEM_dp_dz, data.dP_dz)
+data.HEM_mae = mae
+
+print(data)
+
+# ME
+merror=MError(data.HEM_dp_dz, data.dP_dz)
+data.HEM_merror = merror
+
+# RMS 
+rms=RMS(data.HEM_dp_dz, data.dP_dz)
+data.HEM_rms = rms
+
+# R2
+r2=R2(data.HEM_dp_dz, data.dP_dz)
+data.HEM_R2 = r2
+
+
 
 ### Lockhard-Martinelli Correlation ###
 n = 0
