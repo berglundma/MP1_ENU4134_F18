@@ -132,25 +132,26 @@ def dp_dz_fri(m_dot_g, m_dot_f, rho_f, G_m, mu_f, rho_g, mu_g, sigma, pipe_diame
 	return dp_dz_friedal;
 
 
-# def X_tt_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g)
-#	X_tt_squared_2 = (mu_f/mu_g)^0.2*((1-x(m_dot_g, m_dot_f))/x(m_dot_g, m_dot_f))^1.8(rho_g/rho_f)
-#	return X_tt_squared_2
-#
-# def phi_l_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g)
-#		X_tt_squared_2 = X_tt_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g)
-#	phi_l_squared_2 = 1+(C/X_tt_squared_2^(0.5))+(1/X_tt_squared_2)
-#	return phi_l_squared_2
+####### PART 2 #######
+def X_tt_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g):
+	X_tt_squared_2 = (mu_f/mu_g)**0.2*((1-x(m_dot_g, m_dot_f))/x(m_dot_g, m_dot_f))**1.8*(rho_g/rho_f)
+	return X_tt_squared_2;
 
-# def phi_lo_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g)
-#		phi_l_squared_2 = phi_l_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g)
-#	phi_lo_squared2 = phi_l_squared_2*(1-x(m_dot_g, m_dot_f))^(1.8)
-#	return phi_lo_squared_2
+def phi_l_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g, C):
+	X_tt_squared = X_tt_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g)
+	phi_l_squared_2 = 1+(C/X_tt_squared**(0.5))+(1/X_tt_squared)
+	return phi_l_squared_2;
 
-# def dp_dz_LM_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g, G_m, pipe_diameter)
-#		phi_lo_squared_2 = phi_lo_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g)
-#		f_lo_mc = f_lo_mc(G_m, mu_f, pipe_diameter)
-#	dp_dz_LM_2 = -(phi_lo_squared_2*f_lo_mc*G_m^2/(2*pipe_diameter*rho_f))
-#	return dp_dz_LM_2
+def phi_lo_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g, C):
+	phi_l_squared = phi_l_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g, C)
+	phi_lo_squared_2 = phi_l_squared*(1-x(m_dot_g, m_dot_f))**(1.8)
+	return phi_lo_squared_2;
+
+def dp_dz_LM_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g, G_m, pipe_diameter, C):
+	phi_lo_squared = phi_lo_squared_2(mu_f, mu_g, m_dot_f, m_dot_g, rho_f, rho_g, C)
+	f_lo_mcadams = f_lo_mc(G_m, mu_f, pipe_diameter)
+	dp_dz_LM_2 = -(phi_lo_squared*f_lo_mcadams*G_m**2)/(2*pipe_diameter*rho_f)
+	return dp_dz_LM_2;
 
 
 
