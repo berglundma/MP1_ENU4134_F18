@@ -123,7 +123,12 @@ for row_test in data.itertuples():
    print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
 
 ####### Part 2 #######
+<<<<<<< HEAD
 print('..............PART 2.............')
+||||||| merged common ancestors
+=======
+         
+>>>>>>> f88707ec0caf2035bb403c7a43e94457ee2ed24d
 AE_LM_Min = 100 # arbitrary starting value
 C_min = 0 # arbitrary starting value
 C = 0 # starting value
@@ -151,3 +156,93 @@ print('MAE_LM_Final_Min: %s' % (MAE_LM_Min))
 print('C_min: %s' % (C_min))
 
 ####### Part 3 #######
+
+### Re_lo ###
+MAE_Re_lo_Min = 100 # arbitrary starting value
+C1_Re_lo_min = 0 # arbitrary starting value
+C2_Re_lo_min = 0 # arbitrary starting value
+C1 = -0.07 # starting value
+while C1 < -0.02: # ending value
+    C2 = -0.2 # starting value
+    while C2 < -0.1: # ending value
+        corr = []
+        for row_test in data.itertuples():
+           D = row_test.D/1000
+           t_mdotg = row_test.m_dot_g/1000
+           t_mdotf = row_test.m_dot_f/1000
+           gm = G_m(t_mdotg, t_mdotf, D)
+           dp_dz = dp_dz_fric_lo_3(gm, row_test.mu_f, t_mdotg, row_test.rho_g, D, C1, C2)
+           dp_dz = dp_dz/1000
+           corr = corr + [dp_dz]
+        MAE_Re_lo = MAE(corr, exp)
+        if MAE_Re_lo < MAE_Re_lo_Min:
+            MAE_Re_lo_Min = MAE_Re_lo
+            C1_Re_lo_min = C1
+            C2_Re_lo_min = C2
+        print(MAE_Re_lo_Min)
+        C2 = C2 + 0.001
+    C1 = C1 + 0.001
+print('.')
+print('MAE_Re_lo_Min_Final: %s' % (MAE_Re_lo_Min))
+print('C1_Re_lo_min: %s' % (C1_Re_lo_min))
+print('C2_Re_lo_min: %s' % (C2_Re_lo_min))
+
+### Re_l ###
+MAE_Re_l_Min = 100 # arbitrary starting value
+C1_Re_l_min = 0 # arbitrary starting value
+C2_Re_l_min = 0 # arbitrary starting value
+C1 = -0.05 # starting value
+while C1 < -0.01: # ending value
+    C2 = -0.12 # starting value
+    while C2 < -0.08: # ending value
+        corr = []
+        for row_test in data.itertuples():
+           D = row_test.D/1000
+           t_mdotg = row_test.m_dot_g/1000
+           t_mdotf = row_test.m_dot_f/1000
+           gm = G_m(t_mdotg, t_mdotf, D)
+           dp_dz = dp_dz_fric_l_3(gm, row_test.mu_f, t_mdotg, t_mdotf, row_test.rho_g, D, C1, C2)
+           dp_dz = dp_dz/1000
+           corr = corr + [dp_dz]
+        MAE_Re_l = MAE(corr, exp)
+        if MAE_Re_l < MAE_Re_l_Min:
+           MAE_Re_l_Min = MAE_Re_l
+            C1_Re_l_min = C1
+            C2_Re_l_min = C2
+        print(MAE_Re_l_Min)
+        C2 = C2 + 0.001
+    C1 = C1 + 0.001
+print('.')
+print('MAE_Re_l_Min_Final: %s' % (MAE_Re_l_Min))
+print('C1_Re_l_min: %s' % (C1_Re_l_min))
+print('C2_Re_l_min: %s' % (C2_Re_l_min))
+
+### Re_g ###
+MAE_Re_g_Min = 100 # arbitrary starting value
+C1_Re_g_min = 0 # arbitrary starting value
+C2_Re_g_min = 0 # arbitrary starting value
+C1 = -0.1 # starting value
+while C1 < 0.001: # ending value
+    C2 = -0.2 # starting value
+    while C2 < -0.05: # ending value
+        corr = []
+        for row_test in data.itertuples():
+           D = row_test.D/1000
+           t_mdotg = row_test.m_dot_g/1000
+           t_mdotf = row_test.m_dot_f/1000
+           gm = G_m(t_mdotg, t_mdotf, D)
+           dp_dz = dp_dz_fric_g_3(gm, row_test.mu_g, t_mdotg, row_test.rho_g, D, C1, C2)
+           dp_dz = dp_dz/1000
+           corr = corr + [dp_dz]
+        MAE_Re_g = MAE(corr, exp)
+        if MAE_Re_g < MAE_Re_g_Min:
+            MAE_Re_g_Min = MAE_Re_g
+            C1_Re_g_min = C1
+            C2_Re_g_min = C2
+        print(MAE_Re_g_Min)
+        C2 = C2 + 0.001
+    C1 = C1 + 0.001
+print('.')
+print('MAE_Re_g_Min_Final: %s' % (MAE_Re_g_Min))
+print('C1_Re_g_min: %s' % (C1_Re_g_min))
+print('C2_Re_g_min: %s' % (C2_Re_g_min))
