@@ -37,6 +37,8 @@ print(data)
 ####### Part 1 #######
 
 ### HEM Cororelation ###
+corr = []
+exp = []
 for row_test in data.itertuples():
    D = row_test.D/1000
    t_mdotg = row_test.m_dot_g/1000
@@ -56,36 +58,31 @@ for row_test in data.itertuples():
    print('GM: %s' % (gm))
    print('P_test: %s P_data: %s' % (row_test.PressureE, row_test.PressureC))
    print('mu_f: %s   rho_f: %s   rho_g: %s' % (row_test.mu_f, row_test.rho_f, row_test.rho_g))
-<<<<<<< HEAD
    print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
-=======
-   print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz)
 
->>>>>>> temp-branch
-print(data)
+   # MAE
+   corr = corr + [dp_dz]
+   exp  = exp + [row_test.dP_dz]
 
-# MAE
-mae=MAE(data.HEM_dp_dz, data.dP_dz)
-data.HEM_mae = mae
-
-print(data)
+#print(corr, exp)
+mae=MAE(corr, exp)
+print(mae)
+#print(data)
 
 # ME
-merror=MError(data.HEM_dp_dz, data.dP_dz)
-data.HEM_merror = merror
+#for row_test in data.itertuples():
+#  mean_error = MEANError(row_test.HEM_dp_dz, row_test.dP_dz)
+#  data.at[row_test.Index, 'HEM_me'] = mean_error
 
 # RMS 
-rms=RMS(data.HEM_dp_dz, data.dP_dz)
-data.HEM_rms = rms
+#rms=RMS(data.HEM_dp_dz, data.dP_dz)
+#data.HEM_rms = rms
 
 # R2
-r2=R2(data.HEM_dp_dz, data.dP_dz)
-data.HEM_R2 = r2
-<<<<<<< HEAD
+#r2=R2(data.HEM_dp_dz, data.dP_dz)
+#data.HEM_R2 = r2
+#print(data)
 
-
-=======
->>>>>>> temp-branch
 
 ### Lockhard-Martinelli Correlation ###
 for row_test in data.itertuples():
@@ -126,6 +123,7 @@ for row_test in data.itertuples():
    print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
 
 ####### Part 2 #######
+print('..............PART 2.............')
 AE_LM_Min = 100 # arbitrary starting value
 C_min = 0 # arbitrary starting value
 C = 0 # starting value
