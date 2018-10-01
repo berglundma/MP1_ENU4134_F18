@@ -42,9 +42,20 @@ For case 1: \(Re=Re_{lo}\). Therefore, equation 3.3 was used to calculate \(f\).
 \[f=f_l = C_1^lRe_l^{C_2^l}\]
 \[f=f_g = C_1^gRe_g^{C_2^g}\]
 
-Given the typical size of the three Reynolds numbers and the values in equation 3.6--used in the Lockhart Martinelli correlation--calculations were initially iterated and analyzed over every combination of \(C_1\) and \(C_2\) between \(-1\) and \(1\) with steps of \(0.01\). Using this tiny range and small step size, we were capable of estimating optimal \(C\)-values to two decimal places in a reasonable amount of time. The calculated optimal \(C\)-values were then recorded and new \(C\)-value boundaries were created. Once \(C\)-values were estimated to two decimal places, calculations were iterated and analyzed over every combination of \(C_1\) and \(C_2\) over the following ranges: \(C_1\pm 0.05\) and \(C_2\pm 0.05\), where \(C_1\) and \(C_2\) are initial estimates. This time, however, steps of 0.001 were used to yield \(C\)-values accurate to three decimal places. The optimal \(C\)-values estimated are substituted and shown in equations 3.7, 3.8, and 3.9 for cases 1, 2, and 3, respectively.
+Given the typical size of the three Reynolds numbers and the coefficient and exponent values in the \(f_{lo}\) equation for the Lockhart Martinelli correlation, calculations were initially iterated and analyzed over every combination of \(C_1\) and \(C_2\) between \(-1\) and \(1\) with steps of \(0.01\). Using this tiny range and large step size, we were capable of estimating optimal \(C\)-values to two decimal places in a reasonable amount of time. The calculated optimal \(C\)-values were then recorded and new \(C\)-value boundaries were created. Once \(C\)-values were estimated to two decimal places, calculations were iterated and analyzed over every combination of \(C_1\) and \(C_2\) over the following ranges: \(C_1\pm 0.05\) and \(C_2\pm 0.05\), where \(C_1\) and \(C_2\) are initial estimates. This time, however, steps of 0.001 were used to yield \(C\)-values accurate to three decimal places. The optimal \(C\)-values estimated are substituted and shown below for cases 1, 2, and 3. Graphs were created and analyzed for the results of the three optimized correlations.\\
+\\
+\(C_1^{lo}=-0.041\quad C_2^{lo}=-0.136\) \dotfill \(f=-0.041Re_{lo}^{-0.136}\)\\
+\\
+\(C_1^{l}=-0.030\quad C_2^{l}=-0.103\) \dotfill \(f=-0.03Re_{l}^{-0.103}\)\\
+\\
+\(C_1^{g}=-0.080\quad C_2^{g}=-0.157\) \dotfill \(f=-0.08Re_{g}^{-0.157}\)\\
 
-\[f_{lo}=0.184Re^{-0.2}\]
+\textbf{Analysis of Results}
 
+While the MAEs associated with each of the three cases were very similar, case 1 (\(Re_{lo}\)) yielded the least with an MAE of about \(5.708\). Case 3 (\(Re_g\)) followed with an MAE of about \(6.009\), and case 2 yielded the most error with an MAE of about \(6.316\). Therefore, using \(Re_{lo}\) yielded the best correlation. 
+
+\textbf{Discussion}
+
+The strategy used to estimate these \(C\)-values values is not perfect, and was selected to comply with time constraints. As demonstrated in miscellaneous trail runs, initially iterating calculations over every combination of \(C_1\) and \(C_2\) between \(-1\) and \(1\) with steps of \(0.001\) might have yielded much different but more accurate \(C\)-values to three decimal places. Extending the \((-1,1)\) range of the \(C\)-values might have done the same. However, running so many iterations takes much longer and yields what seems to be only small improvements in MAE values. If time allowed, iterations would be run over a much larger range of \(C\)-values to acquire more optimal results. 
 
 \end{document}
