@@ -23,7 +23,7 @@ We have been tasked with identifying the primary empirical parameter in the Lock
 experimental $\frac{dp}{dz}$ provided. We then took the average of those \(C\)-values to be \(31.3\) and used that value to develop bounds in order to iterate through the data to minimize mean absolute error between the correlated and experimental values in python. Iterating calculations for every \(C\)-value beteen 0 and 100 with steps of 0.01 provided a \(c\) value of \(30.23\) which kept the mean absolute error to a minimum of \(7.05\%\). The code used to get these values is presented in appendix 2.
 \par
 In order to analyze the correlation and its suitability to the given data, two plots have been provided displaying some useful information regarding it.
-Figure 2.1 depicts the gaseous mass flow rate vs the correlated pressure gradient at various pipe diameters and figure 2.2 displays the correlated pressure gradient against the experimental pressure gradient at various pipe diameters. Figure 2.1 shows that the pressure gradient decreases significantly as gas mass flux and diameter increase. At a diameter of \(8.8\) mm, the correlated pressure gradient varies over a range of \(-6\) to \(-50\) $\frac{kPa}{m}$ in a span of only about \(5\) $\frac{g}{s}$ in change in gas mass flux, implying that small changes in mass flow rates at a small diameter can significantly affect pressure drop according to this correlation. Figure 2.2 portrays a positive, direct, relatively linear relationship between the correlated pressure gradient and the experimental pressure gradient, implying that there is a strong correlation between the two and that our reoptimization is relativly accurate. Figure 2.2 also demonstrates that regardless of pipe diameter, the Lockheart-Martinelli reoptimization appears to be accurate considering the linearity of the separate plots. 
+Figure 2.1 depicts the gaseous mass flow rate vs the correlated pressure gradient at various pipe diameters and figure 2.2 displays the correlated pressure gradient against the experimental pressure gradient at various pipe diameters. Figure 2.1 shows that the pressure gradient decreases significantly as gas mass flux and diameter increase. At a diameter of \(8.8\) mm, the correlated pressure gradient varies over a range of \(-6\) to \(-50\) \textit{kPa/m} in a span of only about \(5\) $\frac{g}{s}$ in change in gas mass flux, implying that small changes in mass flow rates at a small diameter can significantly affect pressure drop according to this correlation. Figure 2.2 portrays a positive, direct, relatively linear relationship between the correlated pressure gradient and the experimental pressure gradient, implying that there is a strong correlation between the two and that our reoptimization is relativly accurate. Figure 2.2 also demonstrates that regardless of pipe diameter, the Lockheart-Martinelli reoptimization appears to be accurate considering the linearity of the separate plots. 
 
 \section{Part 3 Discussion}
 
@@ -31,22 +31,38 @@ Figure 2.1 depicts the gaseous mass flow rate vs the correlated pressure gradien
 
 In the development of our own model for the pressure gradient based on equations 3.1 and 3.2, we considered the use of three different Reynolds numbers: \(Re_{lo}\), \(Re_l\), and \(Re_g\). 
 
+\begin{equation}
 \[\frac{dp}{dz}_{fric}=f\frac{GU_{sg}}{D}\]
+\end{equation}
+\begin{equation}
 \[f=f(Re)=C_1Re^{C_2}\]
+\end{equation}
 
 For case 1: \(Re=Re_{lo}\). Therefore, equation 3.3 was used to calculate \(f\). To solve for optimal \(C_1^{lo}\) and \(C_2^{lo}\) values, these equations were written into Python. The mean absolute error (MAE) between the correlated pressure gradients and experimental pressure gradients was iteratively calculated for different values of \(C_1^{lo}\) and \(C_2^{lo}\), and the \(C_1^{lo}\) and \(C_2^{lo}\) values that yielded the smallest MAE were used as optimized values. Cases 2 and 3 where \(Re=Re_l\) and \(Re=Re_g\), respectively, were treated the same way, using equations 3.4 and 3.5.
 
+\begin{equation}
 \[f=f_{lo} = C_1^{lo}Re_{lo}^{C_2^{lo}}\]
+\end{equation}
+\begin{equation}
 \[f=f_l = C_1^lRe_l^{C_2^l}\]
+\end{equation}
+\begin{equation}
 \[f=f_g = C_1^gRe_g^{C_2^g}\]
+\end{equation}
 
 Given the typical size of the three Reynolds numbers and the coefficient and exponent values in the \(f_{lo}\) equation for the Lockhart Martinelli correlation, calculations were initially iterated and analyzed over every combination of \(C_1\) and \(C_2\) between \(-1\) and \(1\) with steps of \(0.01\). Using this tiny range and large step size, we were capable of estimating optimal \(C\)-values to two decimal places in a reasonable amount of time. The calculated optimal \(C\)-values were then recorded and new \(C\)-value boundaries were created. Once \(C\)-values were estimated to two decimal places, calculations were iterated and analyzed over every combination of \(C_1\) and \(C_2\) over the following ranges: \(C_1\pm 0.05\) and \(C_2\pm 0.05\), where \(C_1\) and \(C_2\) are initial estimates. This time, however, steps of 0.001 were used to yield \(C\)-values accurate to three decimal places. The optimal \(C\)-values estimated are substituted and shown below for cases 1, 2, and 3. Graphs were created and analyzed for the results of the three optimized correlations.\\
 \\
+\begin{equation}
 \(C_1^{lo}=-0.041\quad C_2^{lo}=-0.136\) \dotfill \(f=-0.041Re_{lo}^{-0.136}\)\\
+\end{equation}
 \\
+\begin{equation}
 \(C_1^{l}=-0.030\quad C_2^{l}=-0.103\) \dotfill \(f=-0.03Re_{l}^{-0.103}\)\\
+\end{equation}
 \\
+\begin{equation}
 \(C_1^{g}=-0.080\quad C_2^{g}=-0.157\) \dotfill \(f=-0.08Re_{g}^{-0.157}\)\\
+\end{equation}
 
 \textbf{Analysis of Results}
 
