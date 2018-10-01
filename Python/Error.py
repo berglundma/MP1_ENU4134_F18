@@ -19,7 +19,7 @@ def R2(corr, exp):
 #     Changes made:
 #     1-n changed to n_corr-1
 #     return r changed to return r**2
-      r = (1.0/(n_corr-1))*(sum_total)
+      r = (1.0/(n_corr-1.0))*(sum_total)
       R2 = r**2
       return R2;
 
@@ -36,13 +36,11 @@ def MAE(corr, exp):
     #print(corr, exp)
     if n_corr == n_exp:
       for n in range(0, n_corr):
-        #print(corr[n], exp[n])
         sum_total += np.absolute(((corr[n]-exp[n])/exp[n])*100)
 
 #     Changes made:
 #     n changed to n_corr
       mae = (1.0/n_corr)*(sum_total)
-      print(mae)
       return mae;
 
     else:
@@ -66,10 +64,10 @@ def RMS(corr, exp):
       print('error calculating R2, length of arrays not equal')
 
 # Mean error must be fed 1-D arrays
-def MEANError(corr, exp, corrLen, expLen):
+def MEANError(corr, exp):
     sum_total = 0
-    n_corr = corrLen
-    n_exp  = expLen
+    n_corr = len(corr)
+    n_exp  = len(exp)
 
     if n_corr == n_exp:
       n = n_corr

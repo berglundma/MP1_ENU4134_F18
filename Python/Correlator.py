@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 # Functions to be imported
 from Equations import *
 from Error import *
+from Plots import *
 
 # Constants
 g = 9.81
@@ -48,43 +49,41 @@ for row_test in data.itertuples():
    dp_dz = dp_dz/1000
    data.at[row_test.Index, 'HEM_dp_dz'] = dp_dz
 
-   #scatter_plot(arrayoftest, arrayofcorr)
-   print('.')
-   print('.')
-   print('.')
-   print('HEM Correlation')
-   print(row_test)
-   print('D: %s   m_dot_g: %s   m_dot_f: %s ' % (row_test.D, row_test.m_dot_g, row_test.m_dot_f))
-   print('GM: %s' % (gm))
-   print('P_test: %s P_data: %s' % (row_test.PressureE, row_test.PressureC))
-   print('mu_f: %s   rho_f: %s   rho_g: %s' % (row_test.mu_f, row_test.rho_f, row_test.rho_g))
-   print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
+#   print('.')
+#   print('.')
+#   print('.')
+#   print('HEM Correlation')
+#   print(row_test)
+#   print('D: %s   m_dot_g: %s   m_dot_f: %s ' % (row_test.D, row_test.m_dot_g, row_test.m_dot_f))
+#   print('GM: %s' % (gm))
+#   print('P_test: %s P_data: %s' % (row_test.PressureE, row_test.PressureC))
+#   print('mu_f: %s   rho_f: %s   rho_g: %s' % (row_test.mu_f, row_test.rho_f, row_test.rho_g))
+#   print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
 
    # MAE
    corr = corr + [dp_dz]
    exp  = exp + [row_test.dP_dz]
 
-#print(corr, exp)
 mae=MAE(corr, exp)
-print(mae)
-#print(data)
+print('MAE: %s' % (mae))
 
 # ME
-#for row_test in data.itertuples():
-#  mean_error = MEANError(row_test.HEM_dp_dz, row_test.dP_dz)
-#  data.at[row_test.Index, 'HEM_me'] = mean_error
+mean_error=MEANError(corr, exp)
+print('Mean Error: %s' % (mean_error))
 
 # RMS 
-#rms=RMS(data.HEM_dp_dz, data.dP_dz)
-#data.HEM_rms = rms
+rms=RMS(corr, exp)
+print('RMS: %s' % (rms))
 
 # R2
-#r2=R2(data.HEM_dp_dz, data.dP_dz)
-#data.HEM_R2 = r2
-#print(data)
-
+r2=R2(corr, exp)
+print('R2: %s' % (r2))
+   
+scatter_plot(exp, corr)
 
 ### Lockhard-Martinelli Correlation ###
+corr = []
+exp = []
 for row_test in data.itertuples():
    D = row_test.D/1000
    t_mdotg = row_test.m_dot_g/1000
@@ -93,17 +92,36 @@ for row_test in data.itertuples():
    dp_dz = dp_dz_LM(row_test.mu_f, row_test.mu_g, t_mdotg, t_mdotf, row_test.rho_g, row_test.rho_f, gm, D)
    dp_dz = dp_dz/1000
 
-   print('.')
-   print('.')
-   print('.')
-   print('Lockhart-Martinelli Correlation')
-   print('D: %s   m_dot_g: %s   m_dot_f: %s' % (row_test.D, row_test.m_dot_g, row_test.m_dot_f))
-   print('GM: %s' % (gm))
-   print('P_test: %s P_data: %s' % (row_test.PressureE, row_test.PressureC))
-   print('mu_f: %s   rho_f: %s   rho_g: %s' % (row_test.mu_f, row_test.rho_f, row_test.rho_g))
-   print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
+#   print('.')
+#   print('.')
+#   print('.')
+#   print('Lockhart-Martinelli Correlation')
+#   print('D: %s   m_dot_g: %s   m_dot_f: %s' % (row_test.D, row_test.m_dot_g, row_test.m_dot_f))
+#   print('GM: %s' % (gm))
+#   print('P_test: %s P_data: %s' % (row_test.PressureE, row_test.PressureC))
+#   print('mu_f: %s   rho_f: %s   rho_g: %s' % (row_test.mu_f, row_test.rho_f, row_test.rho_g))
+#   print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
+   corr = corr + [dp_dz]
+   exp  = exp + [row_test.dP_dz]
+
+mae=MAE(corr, exp)
+print('MAE: %s' % (mae))
+
+# ME
+mean_error = MEANError(corr, exp)
+print('Mean Error: %s' % (mean_error))
+
+# RMS 
+rms=RMS(corr, exp)
+print('RMS: %s' % (rms))
+
+# R2
+r2=R2(corr, exp)
+print('R2: %s' % (r2))
 
 ### Friedel Correlation ###
+corr = []
+exp = []
 for row_test in data.itertuples():
    D = row_test.D/1000
    t_mdotg = row_test.m_dot_g/1000
@@ -112,24 +130,37 @@ for row_test in data.itertuples():
    dp_dz = dp_dz_fri(t_mdotg, t_mdotf, row_test.rho_f, gm, row_test.mu_f, row_test.rho_g, row_test.mu_g, sigma, D)
    dp_dz = dp_dz/1000
 
-   print('.')
-   print('.')
-   print('.')
-   print('Friedel Correlation')
-   print('D: %s   m_dot_g: %s   m_dot_f: %s' % (row_test.D, row_test.m_dot_g, row_test.m_dot_f))
-   print('GM: %s' % (gm))
-   print('P_test: %s P_data: %s' % (row_test.PressureE, row_test.PressureC))
-   print('mu_f: %s   rho_f: %s   rho_g: %s' % (row_test.mu_f, row_test.rho_f, row_test.rho_g))
-   print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
+#   print('.')
+#   print('.')
+#   print('.')
+#   print('Friedel Correlation')
+#   print('D: %s   m_dot_g: %s   m_dot_f: %s' % (row_test.D, row_test.m_dot_g, row_test.m_dot_f))
+#   print('GM: %s' % (gm))
+#   print('P_test: %s P_data: %s' % (row_test.PressureE, row_test.PressureC))
+#   print('mu_f: %s   rho_f: %s   rho_g: %s' % (row_test.mu_f, row_test.rho_f, row_test.rho_g))
+#   print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
+
+   corr = corr + [dp_dz]
+   exp  = exp + [row_test.dP_dz]
+
+mae=MAE(corr, exp)
+print('MAE: %s' % (mae))
+
+# ME
+mean_error = MEANError(corr, exp)
+print('Mean Error: %s' % (mean_error))
+
+# RMS 
+rms=RMS(corr, exp)
+print('RMS: %s' % (rms))
+
+# R2
+r2=R2(corr, exp)
+print('R2: %s' % (r2))
+exit()
 
 ####### Part 2 #######
-<<<<<<< HEAD
-print('..............PART 2.............')
-||||||| merged common ancestors
-=======
-         
->>>>>>> f88707ec0caf2035bb403c7a43e94457ee2ed24d
-AE_LM_Min = 100 # arbitrary starting value
+MAE_LM_Min = 100 # arbitrary starting value
 C_min = 0 # arbitrary starting value
 C = 0 # starting value
 while C < 100.01: # ending value
@@ -207,8 +238,8 @@ while C1 < -0.01: # ending value
         MAE_Re_l = MAE(corr, exp)
         if MAE_Re_l < MAE_Re_l_Min:
            MAE_Re_l_Min = MAE_Re_l
-            C1_Re_l_min = C1
-            C2_Re_l_min = C2
+           C1_Re_l_min = C1
+           C2_Re_l_min = C2
         print(MAE_Re_l_Min)
         C2 = C2 + 0.001
     C1 = C1 + 0.001
