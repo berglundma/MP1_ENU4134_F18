@@ -11,7 +11,7 @@ def R2(corr, exp):
       exp_mean  = np.mean(exp)
       exp_std   = np.std(exp)
 
-      for n in range(0, n_corr):
+      for n in range(0, (n_corr-1)):
         sum_corr = (corr[n]-corr_mean)/corr_std
         sum_exp  = (exp[n]-exp_mean)/exp_std
         sum_total += sum_corr*sum_exp
@@ -35,7 +35,7 @@ def MAE(corr, exp):
     
     #print(corr, exp)
     if n_corr == n_exp:
-      for n in range(0, n_corr):
+      for n in range(0, (n_corr-1)):
         sum_total += np.absolute(((corr[n]-exp[n])/exp[n])*100)
 
 #     Changes made:
@@ -54,7 +54,7 @@ def RMS(corr, exp):
 
     if n_corr == n_exp:
       n = n_corr
-      for n in range(0, n):
+      for n in range(0, (n-1)):
         sum_total += (((corr[n]-exp[n])/exp[n])*100)**2
 
       rms = np.sqrt((1.0/n)*(sum_total))
@@ -71,7 +71,7 @@ def MEANError(corr, exp):
 
     if n_corr == n_exp:
       n = n_corr
-      for n in range(0, n):
+      for n in range(0, (n-1)):
         sum_total += ((corr[n]-exp[n])/exp[n])*100
 
       mean_error = (1.0/n)*(sum_total)
