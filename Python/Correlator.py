@@ -18,10 +18,13 @@ sigma = 0.07407
 
 # File Paths
 data_root='../Data'
+output_root='../Latex/Output_Data'
 test_file='mp1_2018_data.csv'
 tdv_file='Table_densities_viscosities.csv'
+corr_of ='correlator_output.txt'
 test_file_full_path=os.path.join(data_root, test_file)
 tdv_file_full_path=os.path.join(data_root, tdv_file)
+corr_of_file_full_path=os.path.join(output_root, corr_of)
 
 # Import Datasets
 test_data = pd.read_csv(test_file_full_path, names=['D', 'Air_Meter', 'Water_Meter', 'PressureE', 'm_dot_g', 'm_dot_f', 'delta', 'dP_dz'], skiprows=2)
@@ -34,6 +37,8 @@ print(tdv_data)
 data = pd.concat([test_data, tdv_data], axis=1, sort=False)
 #data.to_csv('example.csv')
 print(data)
+
+output_file = open(corr_of_file_full_path,"w+")
 
 ####### Part 1 #######
 
@@ -70,20 +75,25 @@ for row_test in data.itertuples():
    rho_g_a = rho_g_a + [row_test.rho_g]
    Diam_a = Diam_a + [row_test.D]
 
+output_file.write("HEM Errors\r\n")
 mae=MAE(corr, exp)
 print('MAE: %s' % (mae))
+output_file.write('MAE: %s\r\n' % (mae))
 
 # ME
 mean_error=MEANError(corr, exp)
 print('Mean Error: %s' % (mean_error))
+output_file.write('Mean Error: %s\r\n' % (mean_error))
 
 # RMS 
 rms=RMS(corr, exp)
 print('RMS: %s' % (rms))
+output_file.write('RMS: %s\r\n' % (rms))
 
 # R2
 r2=R2(corr, exp)
 print('R2: %s' % (r2))
+output_file.write('R2: %s\r\n' % (r2))
    
 scatter_plot_HEM(exp, corr)
 scatter_plot_HEM_mdot(m_dot_a, corr)
@@ -119,21 +129,26 @@ for row_test in data.itertuples():
    rho_g_a = rho_g_a + [row_test.rho_g]
    Diam_a = Diam_a + [row_test.D]
 
+output_file.write("\r\nLM Errors\r\n")
 mae=MAE(corr, exp)
 print('MAE: %s' % (mae))
+output_file.write('MAE: %s\r\n' % (mae))
 
 # ME
-mean_error = MEANError(corr, exp)
+mean_error=MEANError(corr, exp)
 print('Mean Error: %s' % (mean_error))
+output_file.write('Mean Error: %s\r\n' % (mean_error))
 
 # RMS 
 rms=RMS(corr, exp)
 print('RMS: %s' % (rms))
+output_file.write('RMS: %s\r\n' % (rms))
 
 # R2
 r2=R2(corr, exp)
 print('R2: %s' % (r2))
-
+output_file.write('R2: %s\r\n' % (r2))
+   
 scatter_plot_LM(exp, corr)
 scatter_plot_LM_mdot(m_dot_a, corr)
 scatter_plot_LM_rho(rho_g_a, corr)
@@ -169,20 +184,25 @@ for row_test in data.itertuples():
    rho_g_a = rho_g_a + [row_test.rho_g]
    Diam_a = Diam_a + [row_test.D]
 
+output_file.write("\r\nFreidel Errors\r\n")
 mae=MAE(corr, exp)
 print('MAE: %s' % (mae))
+output_file.write('MAE: %s\r\n' % (mae))
 
 # ME
-mean_error = MEANError(corr, exp)
+mean_error=MEANError(corr, exp)
 print('Mean Error: %s' % (mean_error))
+output_file.write('Mean Error: %s\r\n' % (mean_error))
 
 # RMS 
 rms=RMS(corr, exp)
 print('RMS: %s' % (rms))
+output_file.write('RMS: %s\r\n' % (rms))
 
 # R2
 r2=R2(corr, exp)
 print('R2: %s' % (r2))
+output_file.write('R2: %s\r\n' % (r2))
 
 scatter_plot_FE(exp, corr)
 scatter_plot_FE_mdot(m_dot_a, corr)
