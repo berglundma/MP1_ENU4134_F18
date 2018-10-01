@@ -5,21 +5,22 @@
 
 \section{Part 3 Discussion}
 
-\hspace{15pt} In the development of our own model for the pressure gradient based on equations 3.1 and 3.2, we considered the use of three different Reynolds numbers: \(Re_{lo}\), \(Re_l\), and \(Re_g\). 
+\textbf{Procedure and Calculations}
+
+In the development of our own model for the pressure gradient based on equations 3.1 and 3.2, we considered the use of three different Reynolds numbers: \(Re_{lo}\), \(Re_l\), and \(Re_g\). 
 
 \[\frac{dp}{dz}_{fric}=f\frac{GU_{sg}}{D}\]
 \[f=f(Re)=C_1Re^{C_2}\]
 
-For case 1: \(Re=Re_{lo}\). Therefore, equation 3.3 was used to calculate \(f\). To solve for optimal \(C_1^{lo}\) and \(C_2^{lo}\) values, these equations were written into Python. The mean absolute error (MAE) between the correlated pressure gradients and experimental pressure gradients was iteratively calculated for different values of \(C_1^{lo}\) and \(C_2^{lo}\). The \(C_1^{lo}\) and \(C_2^{lo}\) values that yielded the smallest MAE were used as optimized values.
+For case 1: \(Re=Re_{lo}\). Therefore, equation 3.3 was used to calculate \(f\). To solve for optimal \(C_1^{lo}\) and \(C_2^{lo}\) values, these equations were written into Python. The mean absolute error (MAE) between the correlated pressure gradients and experimental pressure gradients was iteratively calculated for different values of \(C_1^{lo}\) and \(C_2^{lo}\), and the \(C_1^{lo}\) and \(C_2^{lo}\) values that yielded the smallest MAE were used as optimized values. Cases 2 and 3 where \(Re=Re_l\) and \(Re=Re_g\), respectively, were treated the same way, using equations 3.4 and 3.5.
+
 \[f=f_{lo} = C_1^{lo}Re_{lo}^{C_2^{lo}}\]
-
-
-For case 2: \(Re=Re_l\). Therefore, equation 3.4 was used to calculate \(f\).
 \[f=f_l = C_1^lRe_l^{C_2^l}\]
-
-
-For case 3: \(Re=Re_g\). Therefore, equation 3.5 was used to calculate \(f\).
 \[f=f_g = C_1^gRe_g^{C_2^g}\]
+
+Given the typical size of the three Reynolds numbers and the values in equation 3.6--used in the Lockhart Martinelli correlation--calculations were initially iterated and analyzed over every combination of \(C_1\) and \(C_2\) between \(-1\) and \(1\) with steps of \(0.01\). Using this tiny range and small step size, we were capable of estimating optimal \(C\)-values to two decimal places in a reasonable amount of time. The calculated optimal \(C\)-values were then recorded and new \(C\)-value boundaries were created. Once \(C\)-values were estimated to two decimal places, calculations were iterated and analyzed over every combination of \(C_1\) and \(C_2\) over the following ranges: \(C_1\pm 0.05\) and \(C_2\pm 0.05\), where \(C_1\) and \(C_2\) are initial estimates. This time, however, steps of 0.001 were used to yield \(C\)-values accurate to three decimal places. The optimal \(C\)-values estimated are substituted and shown in equations 3.7, 3.8, and 3.9 for cases 1, 2, and 3, respectively.
+
+\[f_{lo}=0.184Re^{-0.2}\]
 
 
 \end{document}
