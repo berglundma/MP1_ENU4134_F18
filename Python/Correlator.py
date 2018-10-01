@@ -40,6 +40,9 @@ print(data)
 ### HEM Cororelation ###
 corr = []
 exp = []
+m_dot_a = []
+rho_g_a = []
+Diam_a = []
 for row_test in data.itertuples():
    D = row_test.D/1000
    t_mdotg = row_test.m_dot_g/1000
@@ -62,7 +65,10 @@ for row_test in data.itertuples():
 
    # MAE
    corr = corr + [dp_dz]
-   exp  = exp + [row_test.dP_dz]
+   exp  = exp  + [row_test.dP_dz]
+   m_dot_a = m_dot_a + [row_test.m_dot_g]
+   rho_g_a = rho_g_a + [row_test.rho_g]
+   Diam_a = Diam_a + [row_test.D]
 
 mae=MAE(corr, exp)
 print('MAE: %s' % (mae))
@@ -79,11 +85,17 @@ print('RMS: %s' % (rms))
 r2=R2(corr, exp)
 print('R2: %s' % (r2))
    
-scatter_plot(exp, corr)
+scatter_plot_HEM(exp, corr)
+scatter_plot_HEM_mdot(m_dot_a, corr)
+scatter_plot_HEM_rho(rho_g_a, corr)
+scatter_plot_HEM_D(Diam_a, corr)
 
 ### Lockhard-Martinelli Correlation ###
 corr = []
 exp = []
+m_dot_a = []
+rho_g_a = []
+Diam_a = []
 for row_test in data.itertuples():
    D = row_test.D/1000
    t_mdotg = row_test.m_dot_g/1000
@@ -103,6 +115,9 @@ for row_test in data.itertuples():
 #   print('Correlated: %s kPa/m  Experimental: %s kPa/m' % (dp_dz, row_test.dP_dz))
    corr = corr + [dp_dz]
    exp  = exp + [row_test.dP_dz]
+   m_dot_a = m_dot_a + [row_test.m_dot_g]
+   rho_g_a = rho_g_a + [row_test.rho_g]
+   Diam_a = Diam_a + [row_test.D]
 
 mae=MAE(corr, exp)
 print('MAE: %s' % (mae))
@@ -119,9 +134,17 @@ print('RMS: %s' % (rms))
 r2=R2(corr, exp)
 print('R2: %s' % (r2))
 
+scatter_plot_LM(exp, corr)
+scatter_plot_LM_mdot(m_dot_a, corr)
+scatter_plot_LM_rho(rho_g_a, corr)
+scatter_plot_LM_D(Diam_a, corr)
+
 ### Friedel Correlation ###
 corr = []
 exp = []
+m_dot_a = []
+rho_g_a = []
+Diam_a = []
 for row_test in data.itertuples():
    D = row_test.D/1000
    t_mdotg = row_test.m_dot_g/1000
@@ -142,6 +165,9 @@ for row_test in data.itertuples():
 
    corr = corr + [dp_dz]
    exp  = exp + [row_test.dP_dz]
+   m_dot_a = m_dot_a + [row_test.m_dot_g]
+   rho_g_a = rho_g_a + [row_test.rho_g]
+   Diam_a = Diam_a + [row_test.D]
 
 mae=MAE(corr, exp)
 print('MAE: %s' % (mae))
@@ -157,6 +183,11 @@ print('RMS: %s' % (rms))
 # R2
 r2=R2(corr, exp)
 print('R2: %s' % (r2))
+
+scatter_plot_FE(exp, corr)
+scatter_plot_FE_mdot(m_dot_a, corr)
+scatter_plot_FE_rho(rho_g_a, corr)
+scatter_plot_FE_D(Diam_a, corr)
 exit()
 
 ####### Part 2 #######
